@@ -1,10 +1,8 @@
 <template>
+
     <div>
-
         <Navigation></Navigation>
-        <br>
         <router-view></router-view>
-
     </div>
 </template>
 
