@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card class="box-card item">
+        <el-card  class="box-card item"  shadow="hover">
             <template #header>
                 <div class="card-header">
                     <i class="fas fa-home"></i>
@@ -25,7 +25,7 @@
                     一枚Java渣,寻找心中的OnePiece
                 </div>
             </div>
-            <div class="card-header item">
+            <div class="card-header">
                 <div class="margin-l-r-auto">
 
                 </div>
@@ -42,11 +42,11 @@
     }
 </script>
 
-<style>
+<style scoped>
     .myAvatar {
         margin-left: auto;
         margin-right: auto;
-        width: 85%;
+        width: 60%;
         border-radius: 50%;
         overflow: hidden;
     }
@@ -78,11 +78,6 @@
         margin-bottom: 18px;
     }
 
-    .button {
-        padding: 0;
-        min-height: auto;
-    }
-
     .image {
         width: 100%;
         display: block;
@@ -90,22 +85,6 @@
 
 </style>
 
-
-<!--<template>-->
-<!--    <el-row>-->
-<!--        <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">-->
-<!--            <el-card :body-style="{ padding: '0px' }">-->
-<!--                <div style="padding: 14px;">-->
-<!--                    <span>好吃的汉堡</span>-->
-<!--                    <div class="bottom">-->
-<!--                        <time class="time">{{ currentDate }}</time>-->
-<!--                        <el-button type="text" class="button">操作按钮</el-button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </el-card>-->
-<!--        </el-col>-->
-<!--    </el-row>-->
-<!--</template>-->
 
 
 

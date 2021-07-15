@@ -6,12 +6,11 @@
                     class="el-menu-demo"
                     mode="horizontal"
                     @select="handleSelect"
-                    background-color="#545c64"
-                    text-color="#fff"
-                    active-text-color="#ffd04b"
-                    default-active="/"
+                    background-color="white"
+                    text-color="black"
+                    active-text-color="deepskyblue"
                     router>
-                <el-menu-item style="font-family: Helvetica;font-size: 20px">ActSpirits</el-menu-item>
+                <el-menu-item @click="redirectToHome" style="font-family: Helvetica;font-size: 20px;color: dodgerblue">ActSpirits</el-menu-item>
                 <el-menu-item :index="item.path" v-for="(item,index) in $router.options.routes[0].children">
                     <i :class="item.class"></i>{{item.name}}
                 </el-menu-item>
@@ -31,6 +30,9 @@
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            redirectToHome(){
+                location.href='/';
             }
         }
     }
