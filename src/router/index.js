@@ -19,12 +19,6 @@ const routes = [
         component:()=>import('../views/ListTag')
       },
       {
-        path:'/listComment',
-        name:'评论',
-        class:'el-icon-s-comment',
-        component:()=>import('../views/ListComment')
-      },
-      {
         path:'/about',
         name:'关于',
         class:'el-icon-s-operation',

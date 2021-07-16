@@ -1,9 +1,8 @@
 <template>
     <div>
-        <el-card  class="box-card item"  shadow="hover">
+        <el-card class="box-card item" shadow="hover">
             <template #header>
                 <div class="card-header">
-                    <i class="fas fa-home"></i>
                     <div class="name margin-l-r-auto">关于我</div>
                     <!--                    <el-button class="button" type="text">详细信息</el-button>-->
                 </div>
@@ -27,7 +26,39 @@
             </div>
             <div class="card-header">
                 <div class="margin-l-r-auto">
-
+                    <el-popover
+                            placement="bottom"
+                            :width="150"
+                            trigger="hover"
+                    >
+                        <template #reference>
+                            <i class="fab fa-qq fa-2x layout"></i>
+                        </template>
+                        <img src="../assets/codeQQ.png" class="QQimage">
+                    </el-popover>
+                    <el-popover
+                            placement="bottom"
+                            :width="150"
+                            trigger="hover"
+                    >
+                        <template #reference>
+                            <i class="fab fa-weixin fa-2x layout"></i>
+                        </template>
+                        <img src="../assets/codeWeChat.jpg" class="QQimage">
+                    </el-popover>
+                    <el-popover
+                            placement="bottom"
+                            :width="150"
+                            trigger="hover"
+                    >
+                        <template #reference>
+                            <a href="https://github.com/ActSpirits" target="_blank" style="color: black"
+                               id="titleGitHub">
+                                <i class="fab fa-github fa-2x layout"></i>
+                            </a>
+                        </template>
+                        点击前往
+                    </el-popover>
                 </div>
             </div>
 
@@ -39,10 +70,20 @@
 <script>
     export default {
         name: "AboutMeCard",
+        data() {
+            return {
+                visible: false,
+            };
+        }
     }
 </script>
 
 <style scoped>
+    .layout {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
     .myAvatar {
         margin-left: auto;
         margin-right: auto;
@@ -69,7 +110,7 @@
 
     }
 
-    .margin-l-r-auto{
+    .margin-l-r-auto {
         margin-left: auto;
         margin-right: auto;
     }
@@ -83,7 +124,17 @@
         display: block;
     }
 
+    .QQimage {
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
+
+
+
+
 
 
 

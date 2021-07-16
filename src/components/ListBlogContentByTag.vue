@@ -3,7 +3,6 @@
         <template #header>
             <div class="card-header">
                 <span>博客列表</span>
-                <search-input style="margin-top: -8px!important;margin-bottom: -8px!important;"></search-input>
             </div>
 
         </template>
@@ -49,10 +48,9 @@
 
 
 <script>
-    import SearchInput from "./SearchInput";
     export default {
-        name: "ListBlogContent",
-        components: {SearchInput}
+        name: "ListBlogContentById",
+        components: {}
     }
 </script>
 
