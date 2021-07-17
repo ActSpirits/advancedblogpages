@@ -25,22 +25,6 @@
                         title:'thymeleaf模板引擎',
                         view:10
                     },
-                    {
-                        title:'thymeleaf模板引擎',
-                        view:10
-                    },
-                    {
-                        title:'thymeleaf模板引擎',
-                        view:10
-                    },
-                    {
-                        title:'thymeleaf模板引擎',
-                        view:10
-                    },
-                    {
-                        title:'thymeleaf模板引擎',
-                        view:10
-                    },
                 ]
             };
         },

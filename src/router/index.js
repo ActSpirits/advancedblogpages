@@ -1,7 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+
 
 const routes = [
   {
+
     path: '/',
     name: '首页',
     component: () => import(/* webpackChunkName: "about" */ '../views/Index'),
@@ -24,12 +26,20 @@ const routes = [
         class:'el-icon-s-operation',
         component:()=>import('../views/About')
       },
-    ]
+    ],
+  },
+  {
+    path: '/getBlogById',
+    name: "博客详情",
+    component:()=>import('../views/Blog')
   }
+
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  // history: createWebHashHistory(),
+  // 修改配置 使得访问的根目录不再带'#/'
+  history: createWebHistory(),
   routes
 })
 

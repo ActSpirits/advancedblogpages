@@ -18,8 +18,8 @@
             <span>能力介绍</span>
         </div>
         <div style="margin-top: 10px;margin-bottom: 20px">
-            <div style="margin-top: 8px;margin-bottom: 8px">1. 熟悉SSM，Springboot，MybatisPlus框架。</div>
-            <div style="margin-top: 8px;margin-bottom: 8px"> 2. 熟悉Linux基本命令，服务器的搭建，项目的部署。</div>
+            <div style="margin-top: 8px;margin-bottom: 8px"> 1. 熟悉SSM，Springboot，MybatisPlus框架。</div>
+            <div style="margin-top: 8px;margin-bottom: 8px"> 2. 熟悉Linux基本命令。</div>
             <div style="margin-top: 8px;margin-bottom: 8px"> 3. 熟悉Git，本网站基于git开发，前端部分已开源。</div>
             <div style="margin-top: 8px;margin-bottom: 8px"> 4. 熟悉Redis</div>
         </div>

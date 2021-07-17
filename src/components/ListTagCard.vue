@@ -8,35 +8,40 @@
                     </div>
                 </div>
             </template>
-            <el-badge :value="2" class="item margin-l-r-t-b-small"   type="warning">
-                <el-button size="small" style="color: teal">Mybatis</el-button>
+            <el-badge v-for="item in list"  :value="item.blogNumber" class="item margin-l-r-t-b-small" type="warning">
+                <el-button size="small" style="color: teal">{{item.name}}</el-button>
             </el-badge>
-            <el-badge :value="2" class="item margin-l-r-t-b-small" type="warning">
-                <el-button size="small" style="color: teal">Tomcat</el-button>
-            </el-badge>
-            <el-badge :value="2" class="item margin-l-r-t-b-small" type="warning">
-                <el-button size="small" style="color: teal">Spring</el-button>
-            </el-badge>
-            <el-badge :value="2" class="item margin-l-r-t-b-small" type="warning">
-                <el-button size="small" style="color: teal">redis</el-button>
-            </el-badge>
+
         </el-card>
     </div>
 </template>
 
 <script>
     export default {
-        name: "ListTagCard"
+        name: "ListTagCard",
+        data() {
+            return {
+                list: [],
+            }
+        },
+        created() {
+            const _this = this;
+            this.axios.get('http://localhost/tag/listTag').then(function (response) {
+                console.log(response);
+                _this.list = response.data;
+            })
+        }
     }
 </script>
 
 <style scoped>
-    .margin-l-r-t-b-small{
+    .margin-l-r-t-b-small {
         margin-left: 6px;
         margin-right: 6px;
         margin-top: 4px;
         margin-bottom: 4px;
     }
+
     .name {
         font-size: 16px;
         font-weight: bold;
@@ -47,6 +52,7 @@
         justify-content: space-between;
         align-items: center;
     }
+
     .margin-l-r-auto {
         margin-left: auto;
         margin-right: auto;

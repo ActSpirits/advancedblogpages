@@ -8,28 +8,30 @@
 
         </template>
         <!--单个博客展示div-->
-        <div v-for="item in 4">
+        <div v-for="item in list">
             <el-row>
                 <el-col :xs="24" :sm="8" :md="10" :lg="7" :xl="7">
                     <div class="myAvatar">
-                        <img src="../assets/bg.png" class="image">
+                        <img :src="item.picture" class="image">
                     </div>
                 </el-col>
                 <el-col :xs="24" :sm="16" :md="14" :lg="17" :xl="17">
                     <div style="font-weight: bold;">
-                        thymeleaf模板引擎
-                        <el-tag type="success" size="mini">标签二</el-tag>
+                        <a href="" style="color: black;text-decoration: none">{{item.title}}</a>
+                        <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
                     </div>
                     <div style="font-weight: 300">
-                        Thymeleaf是一个流行的模板引擎，该模板引擎采用Java语言开发，模板引擎是一个技术名词，是跨领域跨平台的概念，在Java语言体系下有模板引擎。
+                        {{item.description}}
                     </div>
                     <br>
                     <div>
-                        <span><i class="el-icon-date"></i> 2021-06-27</span>
+                        <span><i class="el-icon-date"></i> {{item.time}}</span>
                         <el-divider direction="vertical"></el-divider>
-                        <span><i class="el-icon-view"></i> 64</span>
+                        <span><i class="el-icon-view"></i> {{item.view}}</span>
                         <el-divider direction="vertical"></el-divider>
-                        <span><i class="el-icon-s-comment"></i> 000</span>
+                        <span><i class="far fa-thumbs-up"></i> {{item.like}}</span>
+                        <el-divider direction="vertical"></el-divider>
+                        <span><i class="el-icon-s-comment"></i> {{item.commentNumber}}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -39,8 +41,10 @@
         <el-pagination
                 background
                 layout="prev, pager, next"
-                page-size="4"
-                :total="8">
+                :page-size="pageSize"
+                :total="total"
+                @current-change="page"
+        >
         </el-pagination>
 
 
@@ -50,9 +54,37 @@
 
 <script>
     import SearchInput from "./SearchInput";
+
     export default {
         name: "ListBlogContent",
-        components: {SearchInput}
+        components: {SearchInput},
+        data() {
+            return {
+                pageSize:'',
+                total:'',
+                list:[],
+            }
+        },
+        methods: {
+            page(currentPage) {
+                const _this = this;
+                this.axios.get('http://localhost/blog/listBlog'+'?pn='+currentPage).then(function (response) {
+                    _this.list = response.data.list;
+                    _this.pageSize = response.data.pageSize;
+                    _this.total = response.data.total;
+                });
+            }
+        },
+        created() {
+            const _this = this;
+            this.axios.get('http://localhost/blog/listBlog').then(function (response) {
+                // console.log(response);
+                // console.log(response.data.list);
+                _this.list = response.data.list;
+                _this.pageSize = response.data.pageSize;
+                _this.total = response.data.total;
+            })
+        }
     }
 </script>
 
