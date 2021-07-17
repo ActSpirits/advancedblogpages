@@ -2,7 +2,7 @@
     <div>
         <el-affix :offset="8">
             <el-menu
-                    :default-active="$router.options.routes[0].children[0].path"
+                    :default-active="this.$route.path"
                     class="el-menu-demo"
                     mode="horizontal"
                     @select="handleSelect"
@@ -43,6 +43,9 @@
             redirectToHome() {
                 location.href = '/';
             }
+        },
+        created() {
+
         }
     }
 </script>

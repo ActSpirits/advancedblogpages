@@ -12,13 +12,13 @@
             <el-row>
                 <el-col :xs="24" :sm="8" :md="10" :lg="7" :xl="7">
                     <div class="myAvatar">
-                        <img :src="item.picture" class="image">
+<!--                        <img :src="item.picture" class="image">-->
+                        <img src="../assets/bg.png" class="image">
                     </div>
                 </el-col>
                 <el-col :xs="24" :sm="16" :md="14" :lg="17" :xl="17">
                     <div style="font-weight: bold;">
-                        <a href="" style="color: black;text-decoration: none">{{item.title}}</a>
-                        <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
+                        <a @click="getBlog(item.id)" style="color: black;text-decoration: none;cursor: pointer">{{item.title}}</a> <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
                     </div>
                     <div style="font-weight: 300">
                         {{item.description}}
@@ -73,6 +73,9 @@
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;
                 });
+            },
+            getBlog(id){
+                this.$router.push({path: '/getBlogById', query:{id: id}});
             }
         },
         created() {

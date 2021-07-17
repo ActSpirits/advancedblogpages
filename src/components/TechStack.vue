@@ -28,7 +28,7 @@
         name: 'TechStack',
         data() {
             return {
-                activeNames: ['1']
+                activeNames: []
             };
         },
         methods: {

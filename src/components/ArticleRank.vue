@@ -8,9 +8,14 @@
                 </div>
             </div>
         </template>
-        <div v-for="(item,index) in articleRank" :key="item" class="text">&nbsp;
-            <span style="font-weight: 500">{{item.title}}</span> <i class="far fa-eye"></i> {{item.view}}
-            <el-divider style="margin-top: 15px!important;margin-bottom: 15px!important;" v-if="index<articleRank.length-1"></el-divider>
+        <div v-for="(item,index) in articleRank" :key="item" class="text">
+
+            <span style="color: orangered">
+                <i class="fas fa-fire-alt"></i> {{item.title.substring(0,8)}}...
+            </span>
+            &nbsp;<i class="far fa-eye"></i> {{item.view}}
+
+            <el-divider v-if="index<articleRank.length-1"></el-divider>
         </div>
     </el-card>
 </template>
@@ -20,14 +25,16 @@
         name: "ArticleRank",
         data() {
             return {
-                articleRank:[
-                    {
-                        title:'thymeleaf模板引擎',
-                        view:10
-                    },
-                ]
+                articleRank:[]
             };
         },
+        created() {
+            const _this = this;
+            this.axios.get('http://localhost/blog/listBlogByViewLimited').then(function (response) {
+                // console.log(response.data);
+                _this.articleRank = response.data;
+            })
+        }
     }
 </script>
 
