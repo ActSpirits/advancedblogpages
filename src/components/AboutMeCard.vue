@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="card-header item">
-                <div class="margin-l-r-auto" style="font-size: 14px">
+                <div style="font-size: 14px;text-align: center">
                     一枚Java渣,寻找心中的OnePiece
                 </div>
             </div>
