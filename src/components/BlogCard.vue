@@ -6,14 +6,15 @@
 <!--                    <div style="font-weight: bold;" class="margin-l-r-auto">博客首图</div>-->
 <!--                </div>-->
 <!--            </template>-->
-            <img src="../assets/bg.png" style="width: 100%;border-radius: 5px">
+            <img :src="blog.picture" style="width: 100%;border-radius: 5px">
         </el-card>
     </div>
 </template>
 
 <script>
     export default {
-        name: "BlogCard"
+        name: "BlogCard",
+        props:['blog'],
     }
 </script>
 

@@ -8,7 +8,7 @@
                 </div>
             </div>
         </template>
-        <div v-for="(item,index) in articleRank" :key="item" class="text">
+        <div style="cursor: pointer"  @click="getBlog(item.id)" v-for="(item,index) in articleRank" :key="item" class="text">
 
             <span style="color: orangered">
                 <i class="fas fa-fire-alt"></i> {{item.title.substring(0,8)}}...
@@ -27,6 +27,11 @@
             return {
                 articleRank:[]
             };
+        },
+        methods:{
+            getBlog(id){
+                this.$router.push({path: '/getBlogById', query:{id: id}});
+            }
         },
         created() {
             const _this = this;

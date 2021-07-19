@@ -57,7 +57,7 @@
                                 <i class="fab fa-github fa-2x layout"></i>
                             </a>
                         </template>
-                        点击前往
+                        <div style="text-align: center">点击前往</div>
                     </el-popover>
                 </div>
             </div>
