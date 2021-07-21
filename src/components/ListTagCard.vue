@@ -3,15 +3,14 @@
         <el-card class="box-card" style="margin-bottom: 18px">
             <template #header>
                 <div class="card-header">
-                    <div class="name margin-l-r-auto" style="color: teal">
+                    <div class="name margin-l-r-auto" style="color: teal" >
                         <i class="fas fa-tags"></i> 标签列表
                     </div>
                 </div>
             </template>
             <el-badge v-for="item in list"  :value="item.blogNumber" class="item margin-l-r-t-b-small" type="warning">
-                <el-button size="small" style="color: teal">{{item.name}}</el-button>
+                <el-button size="small" style="color: teal" @click="$emit('changeTag',item.name)">{{item.name}}</el-button>
             </el-badge>
-
         </el-card>
     </div>
 </template>
@@ -19,6 +18,7 @@
 <script>
     export default {
         name: "ListTagCard",
+        emits:['changeTag','enlargeText'],
         data() {
             return {
                 list: [],

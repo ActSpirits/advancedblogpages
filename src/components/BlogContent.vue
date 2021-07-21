@@ -7,16 +7,17 @@
                     <span>博客详情</span>
                     <div class="block" style="margin-top: -5px;margin-bottom: -5px">
                         <span class="demonstration"> &nbsp;&nbsp;&nbsp;&nbsp;博客字体&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                        <el-slider  max="26" v-model="fontSize"></el-slider>
+                        <el-slider max="26" v-model="fontSize"></el-slider>
                     </div>
                 </div>
             </template>
-            <div style="text-align: center;font-size: 26px;font-weight: bold">{{blog.title}}
-                <el-tag type="success" size="medium"></el-tag>
+            <div style="text-align: center;font-size: 26px;font-weight: bold">{{blog.title}}&nbsp;
+                <el-tag type="success" size="medium" v-if="ifShow" v-text="tagName"></el-tag>
             </div>
             <br>
             <div style="text-align: center;">
-                <i class="el-icon-date"></i> {{blog.time}} <i class="el-icon-view"></i> {{blog.view}} <i class="far fa-thumbs-up"></i> {{blog.like}}
+                <i class="el-icon-date"></i> {{blog.time}} <i class="el-icon-view"></i> {{blog.view}} <i
+                    class="far fa-thumbs-up"></i> {{blog.like}}
             </div>
             <br>
             <div v-bind:style="'font-size:'+fontSize+'px'">
@@ -30,17 +31,24 @@
 <script>
     export default {
         name: "BlogContent",
-        props:['blog'],
+        props: ['blog'],
         data() {
             return {
                 fontSize: 16,
+                ifShow: true,
+                tagName: '',
+            }
+        },
+        watch:{
+            blog:function (blog) {
+                this.tagName = blog.tag.name;
             }
         },
         methods: {
             formatTooltip(val) {
                 return val / 100;
             },
-        }
+        },
     }
 </script>
 

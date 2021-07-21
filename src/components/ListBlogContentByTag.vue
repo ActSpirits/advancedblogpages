@@ -3,10 +3,15 @@
         <template #header>
             <div class="card-header">
                 <span>博客列表</span>
-                <el-button v-if="tag" type="success" size="small" style="margin-top: -10px!important;margin-bottom: -10px!important;" plain>中等按钮</el-button>
+                {{tagName1}}
+<!--                <el-button v-if="tag" type="success" size="small"-->
+<!--                           style="margin-top: -10px!important;margin-bottom: -10px!important;" plain>中等按钮-->
+<!--                </el-button>-->
             </div>
 
         </template>
+        <div v-if="list.length==0 && tagName1==''" style="text-align: center;font-weight: bold;color: teal">请先选择标签!</div>
+        <div v-if="list.length==0 && tagName1!=''" style="text-align: center;font-weight: bold;color: teal">当前选中标签没有博客!</div>
         <!--单个博客展示div-->
         <div v-for="item in list">
             <el-row>
@@ -18,7 +23,8 @@
                 </el-col>
                 <el-col :xs="24" :sm="16" :md="14" :lg="17" :xl="17">
                     <div style="font-weight: bold;">
-                        <a @click="getBlog(item.id)" style="color: black;text-decoration: none;cursor: pointer">{{item.title}}</a> <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
+                        <a @click="getBlog(item.id)" style="color: black;text-decoration: none;cursor: pointer">{{item.title}}</a>
+                        <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
                     </div>
                     <div style="font-weight: 300">
                         {{item.description}}
@@ -44,6 +50,7 @@
                 :page-size="pageSize"
                 :total="total"
                 @current-change="page"
+                v-if="list.length != 0"
         >
         </el-pagination>
 
@@ -57,37 +64,44 @@
 
     export default {
         name: "ListBlogContentByTag",
+        props: ['tagName'],
         components: {SearchInput},
         data() {
             return {
-                pageSize:'',
-                total:'',
-                list:[],
+                tagName1: this.tagName,
+                pageSize: '',
+                total: '',
+                list: [],
                 tag: '',
+            }
+        },
+        watch: {
+            tagName:function (tagName) {
+                this.tagName1 = tagName;
+                // alert(this.tagName1);
+                const _this = this;
+                this.axios.get('http://localhost/blog/listBlogByTagName' + '?tagName=' + _this.tagName1).then(function (response) {
+                    _this.list = response.data.list;
+                    _this.pageSize = response.data.pageSize;
+                    _this.total = response.data.total;
+                });
             }
         },
         methods: {
             page(currentPage) {
                 const _this = this;
-                this.axios.get('http://localhost/blog/listBlogByTagName'+'?pn='+currentPage+'&tagName='+_this.tag).then(function (response) {
+                this.axios.get('http://localhost/blog/listBlogByTagName' + '?pn=' + currentPage + '&tagName=' + _this.tagName1).then(function (response) {
                     _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;
                 });
             },
-            getBlog(id){
-                this.$router.push({path: '/getBlogById', query:{id: id}});
+            getBlog(id) {
+                this.$router.push({path: '/getBlogById', query: {id: id}});
             }
         },
         created() {
-            const _this = this;
-            this.axios.get('http://localhost/blog/listBlog').then(function (response) {
-                // console.log(response);
-                // console.log(response.data.list);
-                _this.list = response.data.list;
-                _this.pageSize = response.data.pageSize;
-                _this.total = response.data.total;
-            })
+
         }
     }
 </script>
