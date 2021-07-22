@@ -28,13 +28,13 @@
                             <el-input v-model="form.email"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="getEmailCode">获取验证码</el-button>
+                            <el-button type="success" @click="getEmailCode">获取验证码</el-button>
                         </el-form-item>
                         <el-form-item label="邮箱验证码">
                             <el-input v-model="form.emailCode"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="success" @click="onSubmit">注册</el-button>
+                            <el-button type="primary" @click="onSubmit">注册</el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>

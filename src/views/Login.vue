@@ -19,7 +19,7 @@
                             <el-input v-model="form.password"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="success" @click="onSubmit">注册</el-button>
+                            <el-button type="primary" @click="onSubmit">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -32,8 +32,12 @@
 </template>
 
 <script>
+    import { ElNotification } from 'element-plus';
     export default {
         name: "Login",
+        components:{
+            ElNotification
+        },
         data() {
             return {
                 form: {
@@ -44,7 +48,32 @@
         },
         methods: {
             onSubmit() {
-                console.log('submit!');
+                const _this = this;
+                this.axios.get('http://localhost/user/login'+'?username='+this.form.username+'&password='+this.form.password).then(function (response) {
+                    console.log(response);
+                    if (response.data == "登录成功!"){
+                        ElNotification({
+                            message: response.data+' 即将跳转到首页!',
+                            type: 'success',
+                            showClose: false,
+                            position: 'top-left'
+                        })
+                    setTimeout(
+                       function () {
+                           _this.$router.push('/');
+                       },2500
+                    )
+
+                    }
+                    else {
+                        ElNotification({
+                            message: response.data,
+                            type: 'error',
+                            showClose: false,
+                            position: 'top-left'
+                        })
+                    }
+                })
             },
         }
     }
