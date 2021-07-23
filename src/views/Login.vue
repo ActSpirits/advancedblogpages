@@ -1,4 +1,6 @@
 <template>
+    <Navigation></Navigation>
+    <br>
     <div>
         <el-row :gutter="10">
             <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="4">
@@ -33,10 +35,11 @@
 
 <script>
     import { ElNotification } from 'element-plus';
+    import Navigation from "../components/Navigation";
     export default {
         name: "Login",
         components:{
-            ElNotification
+            ElNotification,Navigation
         },
         data() {
             return {
@@ -56,7 +59,7 @@
                             message: response.data+' 即将跳转到首页!',
                             type: 'success',
                             showClose: false,
-                            position: 'top-left'
+                            position: 'bottom-left'
                         })
                     setTimeout(
                        function () {
@@ -70,7 +73,7 @@
                             message: response.data,
                             type: 'error',
                             showClose: false,
-                            position: 'top-left'
+                            position: 'bottom-left'
                         })
                     }
                 })

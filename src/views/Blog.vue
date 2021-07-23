@@ -2,8 +2,10 @@
     <div>
         <navigation></navigation>
         <br>
+
         <el-row>
-            <el-col :xs="0" :sm="0" :md="0" :lg="1" :xl="3"></el-col>
+            <el-col :xs="0" :sm="0" :md="0" :lg="1" :xl="3">
+            </el-col>
             <el-col :xs="24" :sm="14" :md="15" :lg="13" :xl="12">
                 <blog-content :blog="blog"></blog-content>
                 <br>
@@ -24,13 +26,16 @@
     import Navigation from "../components/Navigation";
     import ListCommentCard from "../components/ListCommentCard";
     import BlogCard from "../components/BlogCard";
+    // import { mavonEditor } from "mavon-editor";
+    // import "mavon-editor/dist/css/index.css";
 
     export default {
         name: "Blog",
         components: {BlogCard, ListCommentCard, Navigation, BlogContent},
         data() {
             return {
-                blog: ''
+                blog: '',
+                value:'',
             }
         },
         methods: {},

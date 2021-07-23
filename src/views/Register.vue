@@ -1,4 +1,6 @@
 <template>
+    <Navigation></Navigation>
+    <br>
     <div>
         <el-row :gutter="10">
             <el-col :xs="0" :sm="1" :md="1" :lg="2" :xl="4">
@@ -51,11 +53,12 @@
 
 <script>
     import {ElNotification} from 'element-plus';
+    import Navigation from "../components/Navigation";
 
     export default {
         name: "Register",
         components: {
-            ElNotification
+            ElNotification,Navigation
         },
         data() {
             return {
@@ -77,28 +80,28 @@
                         message: '请先输入用户名!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     });
                 } else if (this.form.password == '') {
                     ElNotification({
                         message: '请先输入密码!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     });
                 } else if (this.form.email == '') {
                     ElNotification({
                         message: '请先输入邮箱!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     });
                 }else if (this.form.emailCode == '') {
                     ElNotification({
                         message: '请先输入邮箱验证码!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     });
                 } else {
                     this.axios.get('http://localhost/user/register' + '?username=' + _this.form.username + '&password=' + _this.form.password + '&email=' + _this.form.email + '&emailCode=' + _this.form.emailCode + '&picture=' + _this.form.picture).then(function (response) {
@@ -107,7 +110,7 @@
                                 message: response.data+'即将跳转首页!',
                                 type: 'success',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                             setTimeout(
                                 function () {
@@ -119,7 +122,7 @@
                                 message: response.data,
                                 type: 'warning',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                         }
 
@@ -133,7 +136,7 @@
                         message: '请先输入邮箱!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     });
                 } else {
                     this.axios.get('http://localhost/user/sendEmailCode' + '?email=' + _this.form.email).then(function (response) {
@@ -143,21 +146,21 @@
                                 message: response.data,
                                 type: 'warning',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                         } else if (response.data == '该邮箱已被注册!') {
                             ElNotification({
                                 message: response.data,
                                 type: 'warning',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                         } else {
                             ElNotification({
                                 message: response.data,
                                 type: 'success',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                             _this.time = 60;
                             setInterval(function () {

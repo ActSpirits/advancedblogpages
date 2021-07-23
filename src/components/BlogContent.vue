@@ -20,23 +20,35 @@
                     class="far fa-thumbs-up"></i> {{blog.like}}
             </div>
             <br>
-            <div v-bind:style="'font-size:'+fontSize+'px'">
-                {{blog.content}}
-            </div>
+            <v-md-preview :text="blog.content"></v-md-preview>
+<!--            <v-md-editor v-model="blog.content" height="400px">-->
+<!--                <div v-bind:style="'font-size:'+fontSize+'px'">-->
+<!--                </div>-->
+<!--            </v-md-editor>-->
 
         </el-card>
     </div>
 </template>
 
 <script>
+    import VMdPreview from '@kangc/v-md-editor/lib/preview';
+    import '@kangc/v-md-editor/lib/style/preview.css';
+    import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+    import '@kangc/v-md-editor/lib/theme/style/github.css';
+    VMdPreview.use(githubTheme)
+
     export default {
         name: "BlogContent",
+        components:{
+            VMdPreview
+        },
         props: ['blog'],
         data() {
             return {
                 fontSize: 16,
                 ifShow: true,
                 tagName: '',
+                content:'嘻嘻哈哈',
             }
         },
         watch:{

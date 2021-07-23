@@ -103,7 +103,7 @@
                         message: '评论内容不能为空!',
                         type: 'warning',
                         showClose: false,
-                        position: 'top-left'
+                        position: 'bottom-left'
                     })
                 } else {
                     this.axios.post('http://localhost/comment/insertComment' + '?content=' + _this.form.content + '&parentId=' + _this.form.parentId + '&blogId=' + _this.blog.id).then(function (response) {
@@ -112,7 +112,7 @@
                                 message: response.data,
                                 type: 'warning',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             });
                             _this.axios.get('http://localhost/comment/listCommentByBlogId' + '?blogId=' + _this.blog.id).then(function (response) {
                                 _this.commentList = response.data;
@@ -122,7 +122,7 @@
                                 message: response.data,
                                 type: 'warning',
                                 showClose: false,
-                                position: 'top-left'
+                                position: 'bottom-left'
                             })
                             if (response.data == '请先登录!') {
                                 _this.$router.push("/login");
