@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div style="font-weight: bold;">评论列表</div>
                     <span style="font-weight: bold;">共{{blog.commentNumber}}条</span>
-<!--                                        {{commentList}}-->
+                    <!--                                        {{commentList}}-->
                 </div>
             </template>
             <!--单个评论-->
@@ -61,9 +61,9 @@
             <!--/单个评论-->
             <!--            <div style="text-align: center">-->
             <el-form label-position="top" ref="form" :model="form" label-width="80px">
+                <input type="text" v-model="form.parentId" style="display: none">
                 <el-form-item label="评论内容">
                     <el-input type="textarea" v-model="form.content" :placeholder="form.prompt"></el-input>
-                    <el-input type="text" v-model="form.parentId"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">评论</el-button>
@@ -76,29 +76,69 @@
 </template>
 
 <script>
+    import {ElNotification} from "element-plus";
+
     export default {
         name: "ListCommentCard",
         props: ['blog'],
+        components: {
+            ElNotification
+        },
         data() {
             return {
                 commentList: [],
                 form: {
-                    prompt:'请输入评论内容',
+                    prompt: '请输入评论内容',
                     content: '',
-                    parentId: '',
+                    parentId: 0,
                 }
             }
         },
         methods: {
             onSubmit() {
-                console.log('submit!');
+
+                const _this = this;
+                if (this.form.content == '') {
+                    ElNotification({
+                        message: '评论内容不能为空!',
+                        type: 'warning',
+                        showClose: false,
+                        position: 'top-left'
+                    })
+                } else {
+                    this.axios.post('http://localhost/comment/insertComment' + '?content=' + _this.form.content + '&parentId=' + _this.form.parentId + '&blogId=' + _this.blog.id).then(function (response) {
+                        if (response.data == '评论成功!') {
+                            ElNotification({
+                                message: response.data,
+                                type: 'warning',
+                                showClose: false,
+                                position: 'top-left'
+                            });
+                            _this.axios.get('http://localhost/comment/listCommentByBlogId' + '?blogId=' + _this.blog.id).then(function (response) {
+                                _this.commentList = response.data;
+                            });
+                        } else {
+                            ElNotification({
+                                message: response.data,
+                                type: 'warning',
+                                showClose: false,
+                                position: 'top-left'
+                            })
+                            if (response.data == '请先登录!') {
+                                _this.$router.push("/login");
+                            }
+                        }
+
+                    });
+                }
             },
-            reply(commentId,username) {
+            reply(commentId, username) {
                 this.form.parentId = commentId;
-                this.form.prompt = '@'+username;
+                this.form.prompt = '@' + username;
+                this.form.content='';
             },
-            reset(){
-                this.form.parentId = '';
+            reset() {
+                this.form.parentId = 0;
                 this.form.prompt = '请输入评论内容';
 
             }
@@ -108,7 +148,6 @@
             const _this = this;
             const blogId = this.$route.query.id;
             this.axios.get('http://localhost/comment/listCommentByBlogId' + '?blogId=' + blogId).then(function (response) {
-                console.log(response.data);
                 _this.commentList = response.data;
             });
         }

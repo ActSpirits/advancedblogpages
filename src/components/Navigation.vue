@@ -22,7 +22,7 @@
                 <el-menu-item :index="item.path" v-for="(item,index) in $router.options.routes[0].children">
                     <i :class="item.class"></i>{{item.name}}
                 </el-menu-item>
-                {{user}}
+                <!--                {{user}}-->
                 <el-menu-item v-if="user != ''">
                     {{user.username}}
                 </el-menu-item>
@@ -59,6 +59,13 @@
                     _this.user = response.data;
                 })
             }
+        },
+        created() {
+            const _this = this;
+            this.axios.get('http://localhost/user/getLoginUser').then(function (response) {
+                console.log(response);
+                _this.user = response.data;
+            })
         }
     }
 </script>
