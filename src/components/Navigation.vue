@@ -44,12 +44,14 @@
                     </el-col>
                     <el-col :xs="24" :sm="4" :md="3" :lg="3" :xl="2" v-if="user != ''">
                         <el-submenu index="1" style="text-align: center">
-                            <template #title>{{user.username}}</template>
+                            <template #title>
+                                <el-avatar :src="user.picture"></el-avatar>
+                            </template>
+                            <el-menu-item style="text-align: center">{{user.username}}</el-menu-item>
                             <el-menu-item @click="exit" style="text-align: center">退出登录</el-menu-item>
                         </el-submenu>
                     </el-col>
                     <el-col :xs="0" :sm="0" :md="0" :lg="3" :xl="4">
-
                     </el-col>
                 </el-row>
 

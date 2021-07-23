@@ -16,8 +16,24 @@
                     <div style="text-align: center;margin-bottom: 8px;font-weight: bold">
                         头像
                     </div>
+
                     <div style="text-align: center">
-                        <el-avatar :size="120"></el-avatar>
+
+                    </div>
+                    <div style="text-align: center">
+                        <!--                        class="avatar-uploader"-->
+                        <el-upload
+
+                                action="http://localhost/user/uploadPicture"
+                                name="picture"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess"
+                                :before-upload="beforeAvatarUpload"
+                        >
+                            <!--                            <img v-if="form.picture" :src="form.picture" class="avatar">-->
+                            <el-avatar v-if="form.picture" :src="form.picture" class="avatar"></el-avatar>
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
                     </div>
                     <el-form label-position="top" ref="form" :model="form" label-width="80px">
                         <el-form-item label="用户名">
@@ -58,7 +74,7 @@
     export default {
         name: "Register",
         components: {
-            ElNotification,Navigation
+            ElNotification, Navigation
         },
         data() {
             return {
@@ -68,14 +84,37 @@
                     password: '',
                     email: '',
                     emailCode: '',
-                    picture: '1',
+                    picture: '',
                 }
             }
         },
         methods: {
+            handleAvatarSuccess(res, file) {
+                console.log(res);
+                this.form.picture = 'http://localhost' + res;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
             onSubmit() {
                 const _this = this;
-                if (this.form.username == '') {
+                if (this.form.picture == '') {
+                    ElNotification({
+                        message: '请先上传头像!',
+                        type: 'warning',
+                        showClose: false,
+                        position: 'bottom-left'
+                    });
+                } else if (this.form.username == '') {
                     ElNotification({
                         message: '请先输入用户名!',
                         type: 'warning',
@@ -96,7 +135,7 @@
                         showClose: false,
                         position: 'bottom-left'
                     });
-                }else if (this.form.emailCode == '') {
+                } else if (this.form.emailCode == '') {
                     ElNotification({
                         message: '请先输入邮箱验证码!',
                         type: 'warning',
@@ -105,9 +144,9 @@
                     });
                 } else {
                     this.axios.get('http://localhost/user/register' + '?username=' + _this.form.username + '&password=' + _this.form.password + '&email=' + _this.form.email + '&emailCode=' + _this.form.emailCode + '&picture=' + _this.form.picture).then(function (response) {
-                        if (response.data == '注册成功!'){
+                        if (response.data == '注册成功!') {
                             ElNotification({
-                                message: response.data+'即将跳转首页!',
+                                message: response.data + '即将跳转首页!',
                                 type: 'success',
                                 showClose: false,
                                 position: 'bottom-left'
@@ -115,9 +154,9 @@
                             setTimeout(
                                 function () {
                                     _this.$router.push('/');
-                                },2500
+                                }, 2500
                             )
-                        }else {
+                        } else {
                             ElNotification({
                                 message: response.data,
                                 type: 'warning',
@@ -183,4 +222,39 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>
+
+
+
+
+
+
+
+

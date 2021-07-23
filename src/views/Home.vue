@@ -13,8 +13,6 @@
             </el-col>
             <el-col :xs="0" :sm="1" :md="1" :lg="3" :xl="4"></el-col>
         </el-row>
-
-
     </div>
 </template>
 
