@@ -22,10 +22,17 @@
                 <el-menu-item :index="item.path" v-for="(item,index) in $router.options.routes[0].children">
                     <i :class="item.class"></i>{{item.name}}
                 </el-menu-item>
-                <!--                {{user}}-->
-                <el-menu-item v-if="user != ''">
-                    {{user.username}}
+                <el-menu-item :index="$router.options.routes[1].path" v-if="user == ''">
+                    <i :class="$router.options.routes[1].class"></i>{{$router.options.routes[1].name}}
                 </el-menu-item>
+                <el-menu-item :index="$router.options.routes[2].path" v-if="user == ''">
+                    <i :class="$router.options.routes[2].class"></i>{{$router.options.routes[2].name}}
+                </el-menu-item>
+                <!--                {{user}}-->
+                <el-submenu index="1" v-if="user != ''">
+                    <template #title>{{user.username}}</template>
+                    <el-menu-item @click="exit">退出登录</el-menu-item>
+                </el-submenu>
                 <!--                    </el-col>-->
                 <!--                </el-row>-->
 
@@ -36,14 +43,32 @@
 </template>
 
 <script>
+    import { ElNotification } from 'element-plus';
     export default {
         name: "Navigation",
+        components:{
+            ElNotification
+        },
         data() {
             return {
                 user: '',
             };
         },
         methods: {
+            exit(){
+                const _this = this;
+                this.axios.get('http://localhost/user/exit').then(function (response) {
+                    console.log(response.data);
+                    ElNotification({
+                        message: response.data,
+                        type: 'success',
+                        showClose: false,
+                        position: 'top-left'
+                    })
+                    _this.user = '';
+                })
+
+            },
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
             },

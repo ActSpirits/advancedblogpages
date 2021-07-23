@@ -26,19 +26,19 @@ const routes = [
                 class: 'el-icon-s-operation',
                 component: () => import('../views/About')
             },
-            {
-                path: '/login',
-                name: '登录',
-                class: 'el-icon-user',
-                component: () => import('../views/Login')
-            },
-            {
-                path: '/register',
-                name: '注册',
-                class: 'el-icon-news',
-                component: () => import('../views/Register')
-            },
         ],
+    },
+    {
+        path: '/login',
+        name: '登录',
+        class: 'el-icon-user',
+        component: () => import('../views/Login')
+    },
+    {
+        path: '/register',
+        name: '注册',
+        class: 'el-icon-news',
+        component: () => import('../views/Register')
     },
     {
         path: '/getBlogById',
