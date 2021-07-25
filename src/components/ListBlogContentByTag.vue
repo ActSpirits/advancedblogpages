@@ -17,8 +17,7 @@
             <el-row>
                 <el-col :xs="24" :sm="8" :md="10" :lg="7" :xl="7">
                     <div class="myAvatar">
-                        <!--                        <img :src="item.picture" class="image">-->
-                        <img src="../assets/bg.png" class="image">
+                        <img :src="item.picture" class="image">
                     </div>
                 </el-col>
                 <el-col :xs="24" :sm="16" :md="14" :lg="17" :xl="17">

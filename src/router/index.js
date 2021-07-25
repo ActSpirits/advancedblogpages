@@ -44,6 +44,23 @@ const routes = [
         path: '/getBlogById',
         name: "博客详情",
         component: () => import('../views/Blog')
+    },
+    {
+        path: '/admin',
+        name: "后台管理",
+        component: () => import('../views/Admin'),
+        children: [
+            {
+                path: '/admin',
+                name: "博客写作",
+                component: () => import('../views/WriteBlog')
+            },
+            {
+                path: '/manageBlog',
+                name: "博客管理",
+                component: () => import('../views/ManageBlog')
+            },
+        ]
     }
 
 ]

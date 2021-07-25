@@ -26,6 +26,7 @@
 
                                 action="http://localhost/user/uploadPicture"
                                 name="picture"
+                                :with-credentials="true"
                                 :show-file-list="false"
                                 :on-success="handleAvatarSuccess"
                                 :before-upload="beforeAvatarUpload"
