@@ -14,9 +14,9 @@
                 <div>使用MySQL作为数据库，使用Redis对数据库中频繁访问的信息做redis缓存，并定时将redis中的数据持久化进数据库</div>
             </el-collapse-item>
             <el-collapse-item title="组件" name="4">
-                <div style="font-weight: bold">editormd</div>
+                <div style="font-weight: bold">v-md-editor</div>
                 <div>
-                    博客编辑组件
+                    轻量版编辑器
                 </div>
             </el-collapse-item>
         </el-collapse>

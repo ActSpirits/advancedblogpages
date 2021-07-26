@@ -53,8 +53,36 @@
         },
         methods: {
             handleEdit(index, row) {
-                console.log(index, row);
+                const _this = this;
+                this.$prompt('请输入新标签名', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPattern:/^.+$/,
+                    inputErrorMessage: '标签名不能为空!'
+                }).then(({ value }) => {
+                    _this.axios.get('http://localhost/admin/tag/updateTagName'+'?id='+row.id+'&name='+value).then(function (response) {
+                        console.log(response);
+                        ElNotification({
+                            message: response.data,
+                            type: 'success',
+                            showClose: false,
+                            position: 'bottom-left'
+                        });
+                        _this.axios.get('http://localhost/admin/tag/listTag').then(function (response) {
+                            _this.list = response.data;
+                        });
+                    })
+                }).catch(() => {
+                    ElNotification({
+                        message: '已取消修改',
+                        type: 'success',
+                        showClose: false,
+                        position: 'bottom-left'
+                    });
+                });
             },
+
+
             handleDelete(index, row) {
                 const _this = this;
                 this.$confirm('此操作将永久删除该标签, 是否继续?', '提示', {
@@ -99,5 +127,9 @@
         align-items: center;
     }
 </style>
+
+
+
+
 
 

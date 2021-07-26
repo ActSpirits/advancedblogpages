@@ -62,15 +62,6 @@
                     :total="total"
                     :current-page="page">
             </el-pagination>
-            <!--            <el-pagination-->
-            <!--                    background-->
-            <!--                    layout="prev, pager, next"-->
-            <!--                    :page-size="pageSize"-->
-            <!--                    :total="total"-->
-            <!--                    @current-change="page"-->
-            <!--                    v-if="list.length != 0"-->
-            <!--            >-->
-            <!--            </el-pagination>-->
         </el-card>
     </div>
 </template>

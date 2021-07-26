@@ -104,7 +104,11 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    this.axios.post('http://localhost/admin/blog/write' + '?title=' + _this.form.title + '&tagId=' + _this.form.tagId + '&description=' + _this.form.description + '&picture=' + _this.form.picture + '&content=' + _this.form.content).then(function (response) {
+                    this.axios.request({
+                        url: 'http://localhost/admin/blog/write',
+                        method: 'post',
+                        data: _this.form
+                    }).then(function (response) {
                         console.log(response.data);
                         if (response.data == '写作成功!') {
                             ElNotification({
