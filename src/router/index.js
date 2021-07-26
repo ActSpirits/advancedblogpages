@@ -60,6 +60,16 @@ const routes = [
                 name: "博客管理",
                 component: () => import('../views/ManageBlog')
             },
+            {
+                path: '/insertTag',
+                name: "标签新增",
+                component: () => import('../views/InsertTag')
+            },
+            {
+                path: '/manageTag',
+                name: "标签管理",
+                component: () => import('../views/ManageTag')
+            },
         ]
     }
 

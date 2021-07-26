@@ -4,7 +4,7 @@
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
         </el-radio-group>
-        <el-menu default-active="/admin" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
                  :collapse="isCollapse" router>
             <el-submenu index="1">
                 <template #title>
@@ -17,10 +17,10 @@
             <el-submenu index="2">
                 <template #title>
                     <i class="el-icon-location"></i>
-                    <span>用户</span>
+                    <span>标签</span>
                 </template>
-                <el-menu-item index="2-1">用户授权</el-menu-item>
-                <el-menu-item index="2-2">用户管理</el-menu-item>
+                <el-menu-item index="/insertTag">标签新增</el-menu-item>
+                <el-menu-item index="/manageTag">标签管理</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>
