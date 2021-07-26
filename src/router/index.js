@@ -70,8 +70,14 @@ const routes = [
                 name: "标签管理",
                 component: () => import('../views/ManageTag')
             },
+            {
+                path: '/updateBlog',
+                name: "修改博客",
+                component: () => import('../views/UpdateBlog')
+            },
         ]
-    }
+    },
+
 
 ]
 

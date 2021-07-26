@@ -17,7 +17,8 @@
                 </el-col>
                 <el-col :xs="24" :sm="16" :md="14" :lg="17" :xl="17">
                     <div style="font-weight: bold;">
-                        <a @click="getBlog(item.id)" style="color: black;text-decoration: none;cursor: pointer">{{item.title}}</a> <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
+                        <a @click="getBlog(item.id)" style="color: black;text-decoration: none;cursor: pointer">{{item.title}}</a>
+                        <el-tag type="success" size="mini">{{item.tag.name}}</el-tag>
                     </div>
                     <div style="font-weight: 300">
                         {{item.description}}
@@ -59,22 +60,22 @@
         components: {SearchInput},
         data() {
             return {
-                pageSize:'',
-                total:'',
-                list:[],
+                pageSize: '',
+                total: '',
+                list: [],
             }
         },
         methods: {
             page(currentPage) {
                 const _this = this;
-                this.axios.get('http://localhost/blog/listBlog'+'?pn='+currentPage).then(function (response) {
+                this.axios.get('http://localhost/blog/listBlog' + '?pn=' + currentPage).then(function (response) {
                     _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;
                 });
             },
-            getBlog(id){
-                this.$router.push({path: '/getBlogById', query:{id: id}});
+            getBlog(id) {
+                this.$router.push({path: '/getBlogById', query: {id: id}});
             }
         },
         created() {
@@ -106,36 +107,6 @@
         font-weight: bold;
         color: teal;
     }
-
-    .text {
-        font-size: 14px;
-    }
-
-    .item {
-        margin-bottom: 18px;
-    }
-
-    .el-col {
-        border-radius: 4px;
-    }
-
-    .bg-purple-dark {
-        background: #99a9bf;
-    }
-
-    .bg-purple {
-        background: #d3dce6;
-    }
-
-    .bg-purple-light {
-        background: #e5e9f2;
-    }
-
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-
     .image {
         width: 100%;
         display: block;

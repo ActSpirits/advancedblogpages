@@ -38,7 +38,7 @@
                     </el-col>
                 </el-row>
                 <el-form-item label="博客描述">
-                    <el-input type="textarea" autosize="true" v-model="form.description"></el-input>
+                    <el-input type="textarea" v-model="form.description" autosize="true"></el-input>
                 </el-form-item>
                 <el-form-item label="博客内容">
                     <v-md-editor v-model="form.content" height="600px">
@@ -63,7 +63,7 @@
 
     VMdEditor.use(githubTheme);
     export default {
-        name: "WriteBlog",
+        name: "UpdateBlog",
         components: {
             VMdEditor, ElNotification
         },
@@ -71,6 +71,7 @@
             return {
                 tagList: [],
                 form: {
+                    id: '',
                     title: '',
                     tagId: '',
                     description: '',
@@ -105,14 +106,14 @@
                     });
                 } else {
                     this.axios.request({
-                        url: 'http://localhost/admin/blog/write',
+                        url: 'http://localhost/admin/blog/updateBlogById',
                         method: 'post',
                         data: _this.form
                     }).then(function (response) {
                         console.log(response.data);
-                        if (response.data == '写作成功!') {
+                        if (response.data == '修改博客成功!') {
                             ElNotification({
-                                message: '写作成功!',
+                                message: '修改博客成功!',
                                 type: 'success',
                                 showClose: false,
                                 position: 'bottom-left'
@@ -127,6 +128,15 @@
             const _this = this;
             this.axios.get('http://localhost/tag/listTag').then(function (response) {
                 _this.tagList = response.data;
+            })
+            this.axios.get('http://localhost/admin/blog/getBlogById' + '?id=' + _this.$route.query.id).then(function (response) {
+                console.log(response.data);
+                _this.form.id=response.data.id;
+                _this.form.title=response.data.title;
+                _this.form.picture=response.data.picture;
+                _this.form.tagId=response.data.tag.id;
+                _this.form.description=response.data.description;
+                _this.form.content=response.data.content;
             })
         }
     }

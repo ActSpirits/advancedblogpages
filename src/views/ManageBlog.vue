@@ -24,7 +24,7 @@
                         label="标签"
                         width="180">
                     <template #default="scope">
-                        <el-popover effect="light" trigger="hover" placement="top">
+                        <el-popover effect="light" trigger="hover" placement="bottom">
                             <template #default>
                                 <p>
                                     <el-image :src="scope.row.picture" fit="fill"></el-image>
@@ -58,9 +58,10 @@
             <el-pagination
                     background
                     layout="prev, pager, next"
-                    :page-size="1"
+                    :page-size="pageSize"
                     :total="total"
-                    :current-page="page">
+                    @current-change="page"
+            >
             </el-pagination>
         </el-card>
     </div>
@@ -71,7 +72,7 @@
 
     export default {
         name: "ManageBlog",
-        components:{
+        components: {
             ElNotification
         },
         data() {
@@ -83,10 +84,17 @@
         },
         methods: {
             page(currentPage) {
-                alert("嘻嘻");
+                const _this = this;
+                this.axios.get('http://localhost/admin/blog/listBlog' + '?pn=' + currentPage).then(function (response) {
+                    _this.list = response.data.list;
+                    _this.pageSize = response.data.pageSize;
+                    _this.total = response.data.total;
+                });
             },
             handleEdit(index, row) {
                 console.log(index, row);
+                const _this = this;
+                this.$router.push('/updateBlog' + '?id=' + row.id);
             },
             handleDelete(index, row) {
                 const _this = this;
