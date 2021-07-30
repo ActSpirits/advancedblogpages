@@ -26,7 +26,7 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/tag/listTag').then(function (response) {
+            this.axios.get(_this.$api+'/tag/listTag').then(function (response) {
                 // console.log(response);
                 _this.list = response.data;
             })

@@ -34,43 +34,44 @@
 </template>
 
 <script>
-    import { ElNotification } from 'element-plus';
+    import {ElNotification} from 'element-plus';
     import Navigation from "../components/Navigation";
+
     export default {
         name: "Login",
-        components:{
-            ElNotification,Navigation
+        components: {
+            ElNotification, Navigation
         },
         data() {
             return {
                 form: {
-                    username:'',
-                    password:'',
+                    username: '',
+                    password: '',
                 }
             }
         },
         methods: {
             onSubmit() {
                 const _this = this;
-                this.axios.get('http://localhost/user/login'+'?username='+this.form.username+'&password='+this.form.password).then(function (response) {
+                this.axios.post(_this.$api + '/user/login' + '?username=' + this.form.username + '&password=' + this.form.password).then(function (response) {
                     console.log(response);
-                    if (response.data == "登录成功!"){
+                    if (response.data.message == "登录成功!") {
                         ElNotification({
-                            message: response.data+' 即将跳转到首页!',
+                            message: response.data.message + ' 即将跳转到首页!',
                             type: 'success',
                             showClose: false,
                             position: 'bottom-left'
-                        })
-                    setTimeout(
-                       function () {
-                           _this.$router.push('/');
-                       },2500
-                    )
+                        });
+                        localStorage.setItem("token",response.data.token);
+                        setTimeout(
+                            function () {
+                                _this.$router.push('/');
+                            }, 2500
+                        )
 
-                    }
-                    else {
+                    } else {
                         ElNotification({
-                            message: response.data,
+                            message: response.data.message,
                             type: 'error',
                             showClose: false,
                             position: 'bottom-left'

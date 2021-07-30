@@ -11,14 +11,21 @@
             </el-collapse-item>
             <el-collapse-item title="数据库" name="3">
                 <div style="font-weight: bold">MySQL | Redis</div>
-                <div>使用MySQL作为数据库，使用Redis对数据库中频繁访问的信息做redis缓存，并定时将redis中的数据持久化进数据库</div>
+                <div>使用MySQL作为数据库，使用Redis进行邮箱验证码存储</div>
             </el-collapse-item>
-            <el-collapse-item title="组件" name="4">
+            <el-collapse-item title="登录鉴权" name="4">
+                <div style="font-weight: bold">JWT</div>
+                <div>
+                    不适用cookie的情况下实现登录鉴权
+                </div>
+            </el-collapse-item>
+            <el-collapse-item title="组件" name="5">
                 <div style="font-weight: bold">v-md-editor</div>
                 <div>
                     轻量版编辑器
                 </div>
             </el-collapse-item>
+
         </el-collapse>
     </div>
 </template>

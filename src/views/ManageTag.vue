@@ -57,10 +57,14 @@
                 this.$prompt('请输入新标签名', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                    inputPattern:/^.+$/,
+                    inputPattern: /^.+$/,
                     inputErrorMessage: '标签名不能为空!'
-                }).then(({ value }) => {
-                    _this.axios.get('http://localhost/admin/tag/updateTagName'+'?id='+row.id+'&name='+value).then(function (response) {
+                }).then(({value}) => {
+                    _this.axios.post(_this.$api + '/admin/tag/updateTagName' + '?id=' + row.id + '&name=' + value, {}, {
+                        headers: {
+                            token: localStorage.getItem("token")
+                        }
+                    }).then(function (response) {
                         console.log(response);
                         ElNotification({
                             message: response.data,
@@ -68,7 +72,11 @@
                             showClose: false,
                             position: 'bottom-left'
                         });
-                        _this.axios.get('http://localhost/admin/tag/listTag').then(function (response) {
+                        _this.axios.post(_this.$api + '/admin/tag/listTag', {}, {
+                            headers: {
+                                token: localStorage.getItem("token")
+                            }
+                        }).then(function (response) {
                             _this.list = response.data;
                         });
                     })
@@ -90,14 +98,22 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    _this.axios.get('http://localhost/admin/tag/deleteTagById' + '?id=' + row.id).then(function (response) {
+                    _this.axios.post(_this.$api + '/admin/tag/deleteTagById' + '?id=' + row.id, {}, {
+                        headers: {
+                            token: localStorage.getItem("token")
+                        }
+                    }).then(function (response) {
                         ElNotification({
                             message: response.data,
                             type: 'success',
                             showClose: false,
                             position: 'bottom-left'
                         });
-                        _this.axios.get('http://localhost/admin/tag/listTag').then(function (response) {
+                        _this.axios.post(_this.$api + '/admin/tag/listTag', {}, {
+                            headers: {
+                                token: localStorage.getItem("token")
+                            }
+                        }).then(function (response) {
                             _this.list = response.data;
                         })
                     })
@@ -113,7 +129,11 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/admin/tag/listTag').then(function (response) {
+            this.axios.post(_this.$api + '/admin/tag/listTag', {}, {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            }).then(function (response) {
                 _this.list = response.data;
             })
         }

@@ -24,7 +24,7 @@
                         <!--                        class="avatar-uploader"-->
                         <el-upload
 
-                                action="http://localhost/user/uploadPicture"
+                                :action="$api+'/user/uploadPicture'"
                                 name="picture"
                                 :with-credentials="true"
                                 :show-file-list="false"
@@ -92,7 +92,7 @@
         methods: {
             handleAvatarSuccess(res, file) {
                 console.log(res);
-                this.form.picture = 'http://localhost' + res;
+                this.form.picture = this.$api + res;
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -115,14 +115,14 @@
                         showClose: false,
                         position: 'bottom-left'
                     });
-                } else if (this.form.username == '') {
+                } else if (this.form.username == '' || this.form.username.trim() == '') {
                     ElNotification({
                         message: '请先输入用户名!',
                         type: 'warning',
                         showClose: false,
                         position: 'bottom-left'
                     });
-                } else if (this.form.password == '') {
+                } else if (this.form.password == '' || this.form.password.trim() == '' ) {
                     ElNotification({
                         message: '请先输入密码!',
                         type: 'warning',
@@ -144,14 +144,16 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    this.axios.get('http://localhost/user/register' + '?username=' + _this.form.username + '&password=' + _this.form.password + '&email=' + _this.form.email + '&emailCode=' + _this.form.emailCode + '&picture=' + _this.form.picture).then(function (response) {
-                        if (response.data == '注册成功!') {
+                    this.axios.get(_this.$api +'/user/register' + '?username=' + _this.form.username + '&password=' + _this.form.password + '&email=' + _this.form.email + '&emailCode=' + _this.form.emailCode + '&picture=' + _this.form.picture).then(function (response) {
+                        // console.log(response.data.message);
+                        if (response.data.message == '注册成功!') {
                             ElNotification({
-                                message: response.data + '即将跳转首页!',
+                                message: response.data.message + '即将跳转首页!',
                                 type: 'success',
                                 showClose: false,
                                 position: 'bottom-left'
                             });
+                            localStorage.setItem("token",response.data.token);
                             setTimeout(
                                 function () {
                                     _this.$router.push('/');
@@ -159,7 +161,7 @@
                             )
                         } else {
                             ElNotification({
-                                message: response.data,
+                                message: response.data.message,
                                 type: 'warning',
                                 showClose: false,
                                 position: 'bottom-left'
@@ -179,7 +181,7 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    this.axios.get('http://localhost/user/sendEmailCode' + '?email=' + _this.form.email).then(function (response) {
+                    this.axios.get(_this.$api+'/user/sendEmailCode' + '?email=' + _this.form.email).then(function (response) {
                         console.log(response.data);
                         if (response.data == '发送不成功,邮箱不存在!') {
                             ElNotification({

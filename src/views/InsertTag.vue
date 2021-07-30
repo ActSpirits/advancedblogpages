@@ -47,7 +47,11 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    _this.axios.get('http://localhost/admin/tag/insertTag' + '?name=' + _this.form.name).then(function (response) {
+                    _this.axios.post(_this.$api+'/admin/tag/insertTag' + '?name=' + _this.form.name,{},{
+                        headers:{
+                            token:localStorage.getItem("token")
+                        }
+                    }).then(function (response) {
                         if (response.data == '添加失败,该标签已存在!'){
                             ElNotification({
                                 message: response.data,

@@ -26,7 +26,7 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/statistical/get').then(function (response) {
+            this.axios.get(_this.$api+'/statistical/get').then(function (response) {
                 // console.log(response);
                 _this.websiteInformation[0].number = response.data.blogNumber;
                 _this.websiteInformation[1].number = response.data.commentNumber;

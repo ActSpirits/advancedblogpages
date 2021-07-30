@@ -29,25 +29,25 @@
                     <el-col :xs="0" :sm="6" :md="6" :lg="3" :xl="6">
 
                     </el-col>
-                    <el-col :xs="12" :sm="3" :md="3" :lg="3" :xl="2" v-if="user == ''">
+                    <el-col :xs="12" :sm="3" :md="3" :lg="3" :xl="2" v-if="user.username == ''">
                         <el-menu-item :index="$router.options.routes[1].path" style="text-align: center">
                             <i :class="$router.options.routes[1].class"></i>{{$router.options.routes[1].name}}
                         </el-menu-item>
                     </el-col>
-                    <el-col :xs="12" :sm="3" :md="3" :lg="3" :xl="2" v-if="user == ''">
+                    <el-col :xs="12" :sm="3" :md="3" :lg="3" :xl="2" v-if="user.username == ''">
                         <el-menu-item :index="$router.options.routes[2].path" style="text-align: center">
                             <i :class="$router.options.routes[2].class"></i>{{$router.options.routes[2].name}}
                         </el-menu-item>
                     </el-col>
-                    <el-col :xs="0" :sm="2" :md="3" :lg="3" :xl="2" v-if="user != ''">
+                    <el-col :xs="0" :sm="2" :md="3" :lg="3" :xl="2" v-if="user.username != ''">
 
                     </el-col>
-                    <el-col :xs="24" :sm="4" :md="3" :lg="3" :xl="2" v-if="user != ''">
+                    <el-col :xs="24" :sm="4" :md="3" :lg="3" :xl="2" v-if="user.username != ''">
                         <el-submenu index="1" style="text-align: center">
                             <template #title>
                                 <el-avatar :src="user.picture"></el-avatar>
                             </template>
-                            <el-menu-item style="text-align: center">{{user.username}}</el-menu-item>
+                            <el-menu-item style="text-align: center" @click="manage(user.type)">{{user.username}}</el-menu-item>
                             <el-menu-item @click="exit" style="text-align: center">退出登录</el-menu-item>
                         </el-submenu>
                     </el-col>
@@ -71,21 +71,39 @@
         },
         data() {
             return {
-                user: '',
+                user: {
+                    id:'',
+                    username:'',
+                    email:'',
+                    picture:'',
+                    time:'',
+                    type:'',
+                }
             };
         },
         methods: {
+            manage(type){
+                if (type==1){
+                    this.$router.push("/admin");
+                }
+            },
             exit() {
                 const _this = this;
-                this.axios.get('http://localhost/user/exit').then(function (response) {
+                this.axios.get(_this.$api+'/user/exit').then(function (response) {
                     console.log(response.data);
                     ElNotification({
-                        message: response.data,
+                        message: response.data.message,
                         type: 'success',
                         showClose: false,
                         position: 'bottom-left'
                     })
-                    _this.user = '';
+                    localStorage.setItem("token",response.data.token);
+                    _this.user.id = '';
+                    _this.user.username = '';
+                    _this.user.email = '';
+                    _this.user.picture = '';
+                    _this.user.time = '';
+                    _this.user.type = '';
                 })
 
             },
@@ -99,17 +117,41 @@
         watch: {
             $route(to, from) {
                 const _this = this;
-                this.axios.get('http://localhost/user/getLoginUser').then(function (response) {
-                    console.log(response);
-                    _this.user = response.data;
+                this.axios.post(_this.$api+'/user/getLoginUser',{
+                    headers:{
+                        token:localStorage.getItem("token")
+                    }
+                }).then(function (response) {
+                    // console.log(response);
+                    if (response.data.message == '用户已登录!'){
+                        _this.user.id = response.data.id;
+                        _this.user.username = response.data.username;
+                        _this.user.email = response.data.email;
+                        _this.user.picture = response.data.picture;
+                        _this.user.time = response.data.time;
+                        _this.user.type = response.data.type;
+                    }
                 })
             }
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/user/getLoginUser').then(function (response) {
-                console.log(response);
-                _this.user = response.data;
+            this.axios.post(_this.$api+'/user/getLoginUser',{
+
+            },{
+                headers:{
+                    token:localStorage.getItem("token")
+                }
+            }).then(function (response) {
+                // console.log(response);
+                if (response.data.message == '用户已登录!'){
+                    _this.user.id = response.data.id;
+                    _this.user.username = response.data.username;
+                    _this.user.email = response.data.email;
+                    _this.user.picture = response.data.picture;
+                    _this.user.time = response.data.time;
+                    _this.user.type = response.data.type;
+                }
             })
         }
     }

@@ -42,7 +42,7 @@
         created() {
             const _this = this;
             const param = this.$route.query.id;
-            this.axios.get('http://localhost/blog/getBlogById' + '?id=' + param).then(function (response) {
+            this.axios.get(_this.$api+'/blog/getBlogById' + '?id=' + param).then(function (response) {
                 // console.log(response.data);
                 _this.blog = response.data;
             })

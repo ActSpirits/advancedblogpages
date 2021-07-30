@@ -35,7 +35,7 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/blog/listBlogByViewLimited').then(function (response) {
+            this.axios.get(_this.$api+'/blog/listBlogByViewLimited').then(function (response) {
                 // console.log(response.data);
                 _this.articleRank = response.data;
             })

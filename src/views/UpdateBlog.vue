@@ -25,7 +25,7 @@
                         <div style="text-align: center">
                             <el-upload
                                     :with-credentials="true"
-                                    action="http://localhost/admin/blog/uploadPicture"
+                                    :action="$api+'/admin/blog/uploadPicture'"
                                     name="picture"
                                     :show-file-list="false"
                                     :on-success="handleAvatarSuccess"
@@ -91,7 +91,7 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    this.form.picture = 'http://localhost' + res;
+                    this.form.picture = this.$api+ + res;
                 }
 
             },
@@ -106,7 +106,7 @@
                     });
                 } else {
                     this.axios.request({
-                        url: 'http://localhost/admin/blog/updateBlogById',
+                        url: _this.$api+'/admin/blog/updateBlogById',
                         method: 'post',
                         data: _this.form
                     }).then(function (response) {
@@ -126,10 +126,10 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/tag/listTag').then(function (response) {
+            this.axios.get(_this.$api+'/tag/listTag').then(function (response) {
                 _this.tagList = response.data;
             })
-            this.axios.get('http://localhost/admin/blog/getBlogById' + '?id=' + _this.$route.query.id).then(function (response) {
+            this.axios.get(_this.$api+'/admin/blog/getBlogById' + '?id=' + _this.$route.query.id).then(function (response) {
                 console.log(response.data);
                 _this.form.id=response.data.id;
                 _this.form.title=response.data.title;

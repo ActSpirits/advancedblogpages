@@ -16,7 +16,7 @@
                 <el-row>
                     <el-col :span="4">
                         <div>
-                            <el-avatar :size="40" :src="item.picture"></el-avatar>
+                            <el-avatar :size="40" :src="item.user.picture"></el-avatar>
                         </div>
                         <div @click="reply(item.id,item.user.username)"
                              style="margin-left: 7px;cursor: pointer;font-size: 12px;color: #99a9bf">
@@ -37,7 +37,7 @@
                     </el-col>
                     <el-col :span="4">
                         <div>
-                            <el-avatar :size="40" :src="item2.picture"></el-avatar>
+                            <el-avatar :size="40" :src="item2.user.picture"></el-avatar>
                         </div>
                         <div @click="reply(item2.id,item2.user.username)"
                              style="margin-left: 7px;cursor: pointer;font-size: 12px;color: #99a9bf">
@@ -98,35 +98,45 @@
             onSubmit() {
 
                 const _this = this;
-                if (this.form.content == '') {
+                const reg = new RegExp('/^\\s+$/');
+                if (this.form.content == '' || this.form.content.trim() == '') {
                     ElNotification({
                         message: '评论内容不能为空!',
                         type: 'warning',
                         showClose: false,
                         position: 'bottom-left'
                     })
+                } else if (this.form.content.length > 18) {
+                    ElNotification({
+                        message: '评论内容长度不能超过18个字!',
+                        type: 'warning',
+                        showClose: false,
+                        position: 'bottom-left'
+                    })
                 } else {
-                    this.axios.post('http://localhost/comment/insertComment' + '?content=' + _this.form.content + '&parentId=' + _this.form.parentId + '&blogId=' + _this.blog.id).then(function (response) {
+                    this.axios.post(_this.$api + '/comment/insertComment' + '?content=' + _this.form.content + '&parentId=' + _this.form.parentId + '&blogId=' + _this.blog.id, {}, {
+                        headers: {
+                            token: localStorage.getItem("token")
+                        }
+                    }).then(function (response) {
                         if (response.data == '评论成功!') {
                             ElNotification({
                                 message: response.data,
-                                type: 'warning',
+                                type: 'success',
                                 showClose: false,
                                 position: 'bottom-left'
                             });
-                            _this.axios.get('http://localhost/comment/listCommentByBlogId' + '?blogId=' + _this.blog.id).then(function (response) {
+                            _this.axios.get(_this.$api + '/comment/listCommentByBlogId' + '?blogId=' + _this.blog.id).then(function (response) {
                                 _this.commentList = response.data;
                             });
-                        } else {
+                        } else if (response.data.message == "token无效!") {
                             ElNotification({
-                                message: response.data,
+                                message: "请先登录!",
                                 type: 'warning',
                                 showClose: false,
                                 position: 'bottom-left'
                             })
-                            if (response.data == '请先登录!') {
-                                _this.$router.push("/login");
-                            }
+                            _this.$router.push("/login");
                         }
 
                     });
@@ -135,7 +145,7 @@
             reply(commentId, username) {
                 this.form.parentId = commentId;
                 this.form.prompt = '@' + username;
-                this.form.content='';
+                this.form.content = '';
             },
             reset() {
                 this.form.parentId = 0;
@@ -147,7 +157,8 @@
         created() {
             const _this = this;
             const blogId = this.$route.query.id;
-            this.axios.get('http://localhost/comment/listCommentByBlogId' + '?blogId=' + blogId).then(function (response) {
+            this.axios.get(_this.$api + '/comment/listCommentByBlogId' + '?blogId=' + blogId).then(function (response) {
+                console.log(response.data);
                 _this.commentList = response.data;
             });
         }

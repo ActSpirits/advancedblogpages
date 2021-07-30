@@ -25,7 +25,8 @@
                         <div style="text-align: center">
                             <el-upload
                                     :with-credentials="true"
-                                    action="http://localhost/admin/blog/uploadPicture"
+                                    :action="$api+'/admin/blog/uploadPicture'"
+                                    :headers="{'token': token}"
                                     name="picture"
                                     :show-file-list="false"
                                     :on-success="handleAvatarSuccess"
@@ -69,6 +70,7 @@
         },
         data() {
             return {
+                token:localStorage.getItem('token'),
                 tagList: [],
                 form: {
                     title: '',
@@ -90,7 +92,7 @@
                         position: 'bottom-left'
                     });
                 } else {
-                    this.form.picture = 'http://localhost' + res;
+                    this.form.picture = this.$api + res;
                 }
 
             },
@@ -105,9 +107,12 @@
                     });
                 } else {
                     this.axios.request({
-                        url: 'http://localhost/admin/blog/write',
+                        url: _this.$api + '/admin/blog/write',
                         method: 'post',
-                        data: _this.form
+                        data: _this.form,
+                        headers: {
+                            token: localStorage.getItem("token")
+                        }
                     }).then(function (response) {
                         console.log(response.data);
                         if (response.data == '写作成功!') {
@@ -125,7 +130,14 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/tag/listTag').then(function (response) {
+            this.axios.post(_this.$api + '/tag/listTag',
+                {},
+                {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                }
+            ).then(function (response) {
                 _this.tagList = response.data;
             })
         }

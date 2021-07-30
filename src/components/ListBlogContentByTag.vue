@@ -79,7 +79,7 @@
                 this.tagName1 = tagName;
                 // alert(this.tagName1);
                 const _this = this;
-                this.axios.get('http://localhost/blog/listBlogByTagName' + '?tagName=' + _this.tagName1).then(function (response) {
+                this.axios.get(_this.$api+'/blog/listBlogByTagName' + '?tagName=' + _this.tagName1).then(function (response) {
                     _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;
@@ -89,7 +89,7 @@
         methods: {
             page(currentPage) {
                 const _this = this;
-                this.axios.get('http://localhost/blog/listBlogByTagName' + '?pn=' + currentPage + '&tagName=' + _this.tagName1).then(function (response) {
+                this.axios.get(_this.$api+'/blog/listBlogByTagName' + '?pn=' + currentPage + '&tagName=' + _this.tagName1).then(function (response) {
                     _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;

@@ -85,7 +85,16 @@
         methods: {
             page(currentPage) {
                 const _this = this;
-                this.axios.get('http://localhost/admin/blog/listBlog' + '?pn=' + currentPage).then(function (response) {
+                this.axios.post(_this.$api + '/admin/blog/listBlog' + '?pn=' + currentPage,
+                    {
+
+                    },
+                    {
+                        headers: {
+                            token : localStorage.getItem("token")
+                        }
+                    }
+                ).then(function (response) {
                     _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;
                     _this.total = response.data.total;
@@ -103,14 +112,28 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    _this.axios.get('http://localhost/admin/blog/deleteBlogById' + '?id=' + row.id).then(function (response) {
+                    _this.axios.post(_this.$api + '/admin/blog/deleteBlogById' + '?id=' + row.id,
+                        {},
+                        {
+                            headers: {
+                                token: localStorage.getItem("token")
+                            }
+                        }
+                    ).then(function (response) {
                         ElNotification({
                             message: response.data,
                             type: 'success',
                             showClose: false,
                             position: 'bottom-left'
                         });
-                        _this.axios.get('http://localhost/admin/blog/listBlog').then(function (response) {
+                        _this.axios.post(_this.$api + '/admin/blog/listBlog',
+                            {},
+                            {
+                                headers: {
+                                    token: localStorage.getItem("token")
+                                }
+                            }
+                        ).then(function (response) {
                             _this.list = response.data.list;
                             _this.pageSize = response.data.pageSize;
                             _this.total = response.data.total;
@@ -128,11 +151,20 @@
         },
         created() {
             const _this = this;
-            this.axios.get('http://localhost/admin/blog/listBlog').then(function (response) {
+            this.axios.post(_this.$api + '/admin/blog/listBlog',
+                {},
+                {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                }
+            ).then(function (response) {
+                console.log(response.data);
                 _this.list = response.data.list;
                 _this.pageSize = response.data.pageSize;
                 _this.total = response.data.total;
             })
+
         }
     }
 </script>
