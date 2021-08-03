@@ -63,7 +63,7 @@
             <el-form label-position="top" ref="form" :model="form" label-width="80px">
                 <input type="text" v-model="form.parentId" style="display: none">
                 <el-form-item label="评论内容">
-                    <el-input type="textarea" v-model="form.content" :placeholder="form.prompt"></el-input>
+                    <el-input type="textarea" autosize="true" v-model="form.content" :placeholder="form.prompt"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">评论</el-button>

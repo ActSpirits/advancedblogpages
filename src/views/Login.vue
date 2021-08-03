@@ -20,6 +20,9 @@
                         <el-form-item label="密码">
                             <el-input v-model="form.password"></el-input>
                         </el-form-item>
+                        <div style="margin-bottom: 15px">
+                            <span type="warning" @click="forgetUser" style="text-decoration: underline;cursor: pointer;color: darksalmon;font-size: 14px">忘记账号/密码？</span>
+                        </div>
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit">登录</el-button>
                         </el-form-item>
@@ -51,6 +54,44 @@
             }
         },
         methods: {
+            forgetUser() {
+                const _this = this;
+                this.$prompt('请输入账号预留邮箱', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+                    inputErrorMessage: '邮箱格式不正确'
+                }).then(({ value }) => {
+                    _this.axios.post(_this.$api + '/user/sendUserToEmail',{
+                        email:value
+                    },{
+
+                    }).then(function (response) {
+                        if (response.data.message == '已将账号密码信息发送至邮箱!'){
+                            ElNotification({
+                                message: response.data.message,
+                                type: 'success',
+                                showClose: false,
+                                position: 'bottom-left'
+                            })
+                        }else {
+                            ElNotification({
+                                message: response.data.message,
+                                type: 'error',
+                                showClose: false,
+                                position: 'bottom-left'
+                            })
+                        }
+                    })
+                }).catch(() => {
+                    ElNotification({
+                        message: "取消输入",
+                        type: 'info',
+                        showClose: false,
+                        position: 'bottom-left'
+                    })
+                });
+            },
             onSubmit() {
                 const _this = this;
                 this.axios.post(_this.$api + '/user/login' + '?username=' + this.form.username + '&password=' + this.form.password).then(function (response) {
@@ -90,8 +131,6 @@
         align-items: center;
     }
 </style>
-
-
 
 
 
