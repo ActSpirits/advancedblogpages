@@ -41,7 +41,10 @@
                             <el-input v-model="form.username"></el-input>
                         </el-form-item>
                         <el-form-item label="密码">
-                            <el-input v-model="form.password"></el-input>
+                            <el-input type="password" v-model="form.password"></el-input>
+                        </el-form-item>
+                        <el-form-item label="重复密码">
+                            <el-input type="password" v-model="repeatPassword"></el-input>
                         </el-form-item>
                         <el-form-item label="邮箱">
                             <el-input v-model="form.email"></el-input>
@@ -80,6 +83,7 @@
         data() {
             return {
                 time: 0,
+                repeatPassword: '',
                 form: {
                     username: '',
                     password: '',
@@ -129,7 +133,14 @@
                         showClose: false,
                         position: 'bottom-left'
                     });
-                } else if (this.form.email == '') {
+                } else if (this.repeatPassword != this.form.password) {
+                    ElNotification({
+                        message: '两次输入密码不一致!',
+                        type: 'warning',
+                        showClose: false,
+                        position: 'bottom-left'
+                    });
+                }else if (this.form.email == '') {
                     ElNotification({
                         message: '请先输入邮箱!',
                         type: 'warning',

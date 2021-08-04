@@ -18,7 +18,7 @@
                             <el-input v-model="form.username"></el-input>
                         </el-form-item>
                         <el-form-item label="密码">
-                            <el-input v-model="form.password"></el-input>
+                            <el-input type="password" v-model="form.password"></el-input>
                         </el-form-item>
                         <div style="margin-bottom: 15px">
                             <span type="warning" @click="forgetUser" style="text-decoration: underline;cursor: pointer;color: darksalmon;font-size: 14px">忘记账号/密码？</span>

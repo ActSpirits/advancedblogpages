@@ -59,7 +59,6 @@
 
 
 <script>
-    import SearchInput from "./SearchInput";
 
     export default {
         name: "ListBlogContentByTag",
