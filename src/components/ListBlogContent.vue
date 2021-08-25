@@ -2,17 +2,22 @@
     <el-card class="box-card" style="margin-bottom: 18px">
         <template #header>
             <div class="card-header">
-                <span>博客列表</span>
-<!--                <el-form :inline="true" :model="formInline" class="demo-form-inline"-->
-<!--                         style="margin-top: -5px;margin-bottom: -25px">-->
-<!--                    <el-form-item size="small">-->
-<!--                        <el-input v-model="formInline.content" prefix-icon="el-icon-search"-->
-<!--                                  placeholder="根据标题搜索"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item size="small">-->
-<!--                        <el-button type="primary" @click="onSubmit">查询</el-button>-->
-<!--                    </el-form-item>-->
-<!--                </el-form>-->
+                <span>
+                    博客列表
+                    <span style="font-size: 12px;color: #99a9bf">
+                        首页点赞数量每天0点刷新
+                    </span>
+                </span>
+                <!--                <el-form :inline="true" :model="formInline" class="demo-form-inline"-->
+                <!--                         style="margin-top: -5px;margin-bottom: -25px">-->
+                <!--                    <el-form-item size="small">-->
+                <!--                        <el-input v-model="formInline.content" prefix-icon="el-icon-search"-->
+                <!--                                  placeholder="根据标题搜索"></el-input>-->
+                <!--                    </el-form-item>-->
+                <!--                    <el-form-item size="small">-->
+                <!--                        <el-button type="primary" @click="onSubmit">查询</el-button>-->
+                <!--                    </el-form-item>-->
+                <!--                </el-form>-->
             </div>
         </template>
         <!--单个博客展示div-->
@@ -53,6 +58,7 @@
                 @current-change="page"
         >
         </el-pagination>
+
     </el-card>
 </template>
 
@@ -61,7 +67,6 @@
 
     export default {
         name: "ListBlogContent",
-        components: {SearchInput},
         data() {
             return {
                 pageSize: '',
@@ -78,7 +83,7 @@
                 this.axios.post(_this.$api + '/blog/listBlog', {
                     content: _this.formInline.content
                 }).then(function (response) {
-                    Reflect.get(_this.list,"0",response.data.list);
+                    Reflect.get(_this.list, "0", response.data.list);
                     // _this.list.splice(0);
                     // _this.list = response.data.list;
                     _this.pageSize = response.data.pageSize;

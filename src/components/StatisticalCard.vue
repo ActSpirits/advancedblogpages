@@ -5,9 +5,8 @@
             <span style="font-weight: bold;font-size: 15px;color:deepskyblue;">{{item.number}}</span>
             &nbsp
             <span style="font-weight: bold">{{item.name}}</span>
-
-            <el-divider style="margin-top: 12px!important;margin-bottom: 12px!important;"
-                        v-if="index<websiteInformation.length-1"></el-divider>
+            <hr size="1px" style="margin-top: 12px!important;margin-bottom: 12px!important;"
+                v-if="index<websiteInformation.length-1" />
         </div>
     </el-card>
 </template>

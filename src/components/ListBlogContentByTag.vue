@@ -63,7 +63,6 @@
     export default {
         name: "ListBlogContentByTag",
         props: ['tagName'],
-        components: {SearchInput},
         data() {
             return {
                 tagName1: this.tagName,

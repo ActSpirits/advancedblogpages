@@ -82,9 +82,9 @@ const routes = [
 ]
 
 const router = createRouter({
-    // history: createWebHashHistory(),
+    history: createWebHashHistory(),
     // 修改配置 使得访问的根目录不再带'#/'
-    history: createWebHistory(),
+    // history: createWebHistory(),
     routes
 })
 

@@ -54,8 +54,6 @@
                     <el-col :xs="0" :sm="0" :md="0" :lg="3" :xl="4">
                     </el-col>
                 </el-row>
-
-
             </el-menu>
         </el-affix>
     </div>
