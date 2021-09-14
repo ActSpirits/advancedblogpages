@@ -4,8 +4,8 @@
             <template #header>
                 <div class="card-header">
                     <el-breadcrumb separator="/">
-                        <el-breadcrumb-item>博客</el-breadcrumb-item>
-                        <el-breadcrumb-item>博客管理</el-breadcrumb-item>
+                        <el-breadcrumb-item>用户</el-breadcrumb-item>
+                        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
             </template>
@@ -71,7 +71,7 @@
     import {ElNotification} from "element-plus";
 
     export default {
-        name: "ManageBlog",
+        name: "ManageUser",
         components: {
             ElNotification
         },
@@ -103,7 +103,7 @@
             handleEdit(index, row) {
                 console.log(index, row);
                 const _this = this;
-                this.$router.push('/admin' + '?id=' + row.id);
+                this.$router.push('/updateBlog' + '?id=' + row.id);
             },
             handleDelete(index, row) {
                 const _this = this;
@@ -150,7 +150,6 @@
             }
         },
         created() {
-
             const _this = this;
             this.axios.post(_this.$api + '/admin/blog/listBlog',
                 {},

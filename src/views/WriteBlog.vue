@@ -47,8 +47,8 @@
                     </v-md-editor>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">创建</el-button>
-                    <el-button>保存</el-button>
+                    <el-button type="primary" @click="onSubmit">新增/修改</el-button>
+<!--                    <el-button>保存</el-button>-->
                 </el-form-item>
             </el-form>
         </el-card>
@@ -70,9 +70,10 @@
         },
         data() {
             return {
-                token:localStorage.getItem('token'),
+                token: localStorage.getItem('token'),
                 tagList: [],
                 form: {
+                    id: '',
                     title: '',
                     tagId: '',
                     description: '',
@@ -107,7 +108,7 @@
                     });
                 } else {
                     this.axios.request({
-                        url: _this.$api + '/admin/blog/write',
+                        url: _this.$api + '/admin/blog/writeOrUpdate',
                         method: 'post',
                         data: _this.form,
                         headers: {
@@ -115,9 +116,9 @@
                         }
                     }).then(function (response) {
                         console.log(response.data);
-                        if (response.data == '写作成功!') {
+                        if (response.data == '写作成功!' || response.data == '修改博客成功!') {
                             ElNotification({
-                                message: '写作成功!',
+                                message: response.data,
                                 type: 'success',
                                 showClose: false,
                                 position: 'bottom-left'
@@ -130,6 +131,25 @@
         },
         created() {
             const _this = this;
+            this.form.id = this.$route.query.id;
+            this.axios.post(_this.$api + '/admin/blog/getBlogById'+'?id='+_this.$route.query.id,
+                {},
+                {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                }
+            ).then(function (response) {
+                // console.log(response.data);
+                _this.form.title=response.data.title;
+                _this.form.tagId=response.data.tag.id;
+                _this.form.description=response.data.description;
+                _this.form.content=response.data.content;
+                _this.form.picture=response.data.picture;
+
+            });
+
+
             this.axios.post(_this.$api + '/tag/listTag',
                 {},
                 {
@@ -139,7 +159,8 @@
                 }
             ).then(function (response) {
                 _this.tagList = response.data;
-            })
+            });
+
         }
     }
 </script>

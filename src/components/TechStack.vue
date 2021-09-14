@@ -16,13 +16,19 @@
             <el-collapse-item title="登录鉴权" name="4">
                 <div style="font-weight: bold">JWT</div>
                 <div>
-                    不适用cookie的情况下实现登录鉴权
+                    不使用cookie的情况下实现登录鉴权
                 </div>
             </el-collapse-item>
             <el-collapse-item title="组件" name="5">
                 <div style="font-weight: bold">v-md-editor</div>
                 <div>
                     轻量版编辑器
+                </div>
+            </el-collapse-item>
+            <el-collapse-item title="项目部署" name="6">
+                <div style="font-weight: bold">CentOS7 | docker</div>
+                <div>
+                    docker-compose实现服务器上的快速配置部署
                 </div>
             </el-collapse-item>
 

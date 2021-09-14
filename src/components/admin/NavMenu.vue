@@ -8,19 +8,23 @@
                  :collapse="isCollapse" router>
             <el-submenu index="1">
                 <template #title>
-                    <i class="el-icon-location"></i>
-                    <span>博客</span>
+                    <i class="fas fa-pen"></i>&nbsp;&nbsp;<span>博客</span>
                 </template>
                 <el-menu-item index="/admin">博客写作</el-menu-item>
                 <el-menu-item index="/manageBlog">博客管理</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
                 <template #title>
-                    <i class="el-icon-location"></i>
-                    <span>标签</span>
+                    <i class="fas fa-tag"></i>&nbsp;&nbsp;<span>标签</span>
                 </template>
                 <el-menu-item index="/insertTag">标签新增</el-menu-item>
                 <el-menu-item index="/manageTag">标签管理</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3">
+                <template #title>
+                    <i class="fas fa-user"></i>&nbsp;&nbsp;<span>用户</span>
+                </template>
+                <el-menu-item index="/manageUser">用户管理</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>

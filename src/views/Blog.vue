@@ -17,7 +17,6 @@
                     <br>
                     <list-comment-card :blog="blog"></list-comment-card>
                 </el-affix>
-
             </el-col>
             <el-col :xs="0" :sm="0" :md="0" :lg="1" :xl="3"></el-col>
         </el-row>

@@ -71,13 +71,12 @@ const routes = [
                 component: () => import('../views/ManageTag')
             },
             {
-                path: '/updateBlog',
+                path: '/manageUser',
                 name: "修改博客",
-                component: () => import('../views/UpdateBlog')
+                component: () => import('../views/ManageUser')
             },
         ]
     },
-
 
 ]
 
